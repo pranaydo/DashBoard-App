@@ -1,4 +1,4 @@
-export interface SpendData {
+export interface UserData {
     sector: string;
     category: string;
     spend: number;
@@ -9,5 +9,11 @@ export interface SpendData {
   export interface User {
     id: number;
     name: string;
-    data: SpendData[];
+    data: UserData[];
   }
+
+
+export interface Filters {
+  sector?: string;
+  category?: string;
+}

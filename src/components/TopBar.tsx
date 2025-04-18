@@ -2,9 +2,11 @@ import { Button, Dialog, DialogTitle, ButtonGroup, Box } from "@mui/material";
 import { useState } from "react";
 import { users } from "../mockData/MockData";
 import { User } from "../type/types";
+import { useUser } from "../context/UserContext";
 const TopBar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<string>("");
+  const { setUser } = useUser();
 
   return (
     <div style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -41,6 +43,7 @@ const TopBar: React.FC = () => {
                 onClick={() => {
                   console.log("Selected user data:", user);
                   setCurrentUser(user.name);
+                  setUser(user);
                   setOpen(false);
                 }}
                 sx={{ justifyContent: "center", textTransform: "none" }}
