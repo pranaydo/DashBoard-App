@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Container, Tabs, Tab, Box } from "@mui/material";
+import MetricsView from "./components/view/MetricView";
+import AnalyticsView from "./components/view/AnalyticsView";
 
-function App() {
+const App: React.FC = () => {
+  const [tab, setTab] = useState<number>(0);
+
+  console.log(tab);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container>
+        <Tabs value={tab} onChange={(e, newVal) => setTab(newVal)}>
+          <Tab label="Metrics View" />
+          <Tab label="Analytics View" />
+        </Tabs>
+        <Box mt={2}>{tab === 0 ? <MetricsView /> : <AnalyticsView />}</Box>
+      </Container>
     </div>
   );
-}
+};
 
 export default App;
