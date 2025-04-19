@@ -15,7 +15,7 @@ const App: React.FC = () => {
   return (
     <UserProvider>
       <div className="App">
-        <Container>
+        <Box sx={{ px: 10, py: 10, m: 0 }}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Tabs value={tab} onChange={(e, newVal) => setTab(newVal)}>
               <Tab label="Metrics View" />
@@ -32,7 +32,7 @@ const App: React.FC = () => {
           <Box mt={2}>
             {tab === 0 ? <MetricsView filters={filters} /> : <AnalyticsView />}
           </Box>
-        </Container>
+        </Box>
       </div>
     </UserProvider>
   );
