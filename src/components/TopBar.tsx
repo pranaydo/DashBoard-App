@@ -5,7 +5,7 @@ import { User } from "../type/types";
 import { useUser } from "../context/UserContext";
 const TopBar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [currentUser, setCurrentUser] = useState<string>("");
+  // const [currentUser, setCurrentUser] = useState<string>("");
   const { setUser } = useUser();
 
   return (
@@ -47,7 +47,7 @@ const TopBar: React.FC = () => {
                   key={user.id}
                   onClick={() => {
                     console.log("Selected user data:", user);
-                    setCurrentUser(user.name);
+                    // setCurrentUser(user.name);
                     setUser(user);
                     setOpen(false);
                   }}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Tabs, Tab, Box } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 import MetricsView from "./components/view/MetricView";
 import AnalyticsView from "./components/view/AnalyticsView";
 import { UserProvider } from "./context/UserContext";
