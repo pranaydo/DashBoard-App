@@ -46,3 +46,10 @@ The build failed with the following error:
 Additionally, there are TypeScript linting errors causing the build to treat warnings as errors due to the environment variable process.env.CI = true.
 
 fixed issues related build deploying again
+
+<!--  -->
+
+Extra column Added in table - Date
+and Reset Button is also added to reset all the filter values to get all data of user
+
+<!--  -->
