@@ -85,6 +85,8 @@ const MetricsTable: React.FC<MetricsTableProps> = ({ filters }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  console.log("user", user);
+
   // Filter data based on filters
   const filteredData = useMemo(() => {
     return user.data.filter((d) => {

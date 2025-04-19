@@ -30,7 +30,11 @@ const App: React.FC = () => {
           </div>
 
           <Box mt={2}>
-            {tab === 0 ? <MetricsView filters={filters} /> : <AnalyticsView />}
+            {tab === 0 ? (
+              <MetricsView filters={filters} />
+            ) : (
+              <AnalyticsView filters={filters} />
+            )}
           </Box>
         </Box>
       </div>
