@@ -85,12 +85,21 @@ const MetricsTable: React.FC<MetricsTableProps> = ({ filters }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  console.log("user", user);
+
   // Filter data based on filters
-  const filteredData = useMemo(
-    () =>
-      user.data.filter((d) => !filters.sector || d.sector === filters.sector),
-    [user.data, filters.sector]
-  );
+  const filteredData = useMemo(() => {
+    return user.data.filter((d) => {
+      const matchesSector = !filters.sector || d.sector === filters.sector;
+      const matchesCategory =
+        !filters.category || d.category === filters.category;
+      const matchesDate =
+        (!filters.startDate ||
+          new Date(d.date) >= new Date(filters.startDate)) &&
+        (!filters.endDate || new Date(d.date) <= new Date(filters.endDate));
+      return matchesSector && matchesCategory && matchesDate;
+    });
+  }, [user.data, filters]);
 
   // Sort data
   const sortedData = useMemo(() => {
