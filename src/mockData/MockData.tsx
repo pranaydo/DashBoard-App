@@ -438,6 +438,14 @@ export const users: User[] = [
     id: 1,
     name: "Aarohi Patil",
     data: [
+      // {
+      //   sector: "Retail",
+      //   category: "Juice",
+      //   spend: 200,
+      //   percentChange: 5,
+      //   absoluteChange: 10,
+      //   date: "2023-10-01",
+      // },
       {
         sector: "Retail",
         category: "Juice",
@@ -446,6 +454,39 @@ export const users: User[] = [
         absoluteChange: 10,
         date: "2023-10-01",
       },
+      {
+        sector: "Retail",
+        category: "Juice",
+        spend: 300,
+        percentChange: 10,
+        absoluteChange: 30,
+        date: "2023-10-05",
+      },
+      {
+        sector: "Retail",
+        category: "Juice",
+        spend: 150,
+        percentChange: -5,
+        absoluteChange: -7.5,
+        date: "2023-10-10",
+      },
+      {
+        sector: "Retail",
+        category: "Juice",
+        spend: 400,
+        percentChange: 15,
+        absoluteChange: 60,
+        date: "2023-10-15",
+      },
+      {
+        sector: "Retail",
+        category: "Juice",
+        spend: 250,
+        percentChange: 8,
+        absoluteChange: 20,
+        date: "2023-10-20",
+      },
+
       {
         sector: "Food",
         category: "Snacks",

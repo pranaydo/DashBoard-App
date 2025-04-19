@@ -10,7 +10,7 @@ interface FiltersPanelProps {
 }
 
 const sectorOptions = ["Retail", "Food", "Industrial"];
-const categoryOptions = ["Juice", "Snacks", "Tools"];
+const categoryOptions = ["Juice", "Snacks"];
 const metricOptions = ["spend", "reference", "percentChange", "absoluteChange"];
 const attributeOptions = ["country", "sector", "category"];
 
