@@ -37,3 +37,12 @@ so downgrading react to 18
 and installing nivo
 
 Added one chart : Spend Over Time using ResponsiveLine of nivo charts
+
+Deplyoing first version of porject on netlify
+Build is failing due to some warnings and getting error :
+The build failed with the following error:
+
+"build.command" failed. Error message: Command failed with exit code 1: npm run build at line 107.
+Additionally, there are TypeScript linting errors causing the build to treat warnings as errors due to the environment variable process.env.CI = true.
+
+fixed issues related build deploying again
