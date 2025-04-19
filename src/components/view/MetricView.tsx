@@ -1,7 +1,10 @@
 import { Filters } from "../../type/types";
 import MetricsTable from "./MetricsTable";
 
-const MetricsView: React.FC<Filters> = (filters) => {
+interface MetricsViewProps {
+  filters: Filters;
+}
+const MetricsView: React.FC<MetricsViewProps> = ({ filters }) => {
   return (
     <div className="metric-top-bar">
       <MetricsTable filters={filters} />

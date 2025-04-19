@@ -29,7 +29,9 @@ const App: React.FC = () => {
             <FiltersPanel filters={filters} setFilters={setFilters} />
           </div>
 
-          <Box mt={2}>{tab === 0 ? <MetricsView /> : <AnalyticsView />}</Box>
+          <Box mt={2}>
+            {tab === 0 ? <MetricsView filters={filters} /> : <AnalyticsView />}
+          </Box>
         </Container>
       </div>
     </UserProvider>
