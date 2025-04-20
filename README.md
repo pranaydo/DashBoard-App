@@ -84,3 +84,16 @@ again doing npm install --legacy-peer-deps
 locally retry build by - npm run build
 
 pushing this changes to guit and check by deploying site 1
+
+<!-- <> -->
+
+refining the components
+FilterPanel :
+changing the size of off filter to maintain all filter in same line and maintain gap between all the filters and reset button using display flex
+
+Refining the modal of user select added some gap vertically in each user
+keep the standard width of 200px for each USer Button
+reduced width of modal also
+
+showing user name on the topbar efore butoon of select user
+highligiting the user and showing avatar
