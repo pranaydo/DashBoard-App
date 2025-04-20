@@ -47,6 +47,7 @@ Additionally, there are TypeScript linting errors causing the build to treat war
 
 fixed issues related build deploying again
 
+
 <!--  -->
 
 Extra column Added in table - Date
@@ -60,6 +61,7 @@ Added components for diffrent charts
 3 - Performance by Category (Stacked)
 
 <!-- DateRange picker and Attribute and metrics filter remaining  -->
+
 
 for datepickers installing @mui/x-date-pickers
 npm install @mui/x-date-pickers @date-io/date-fns date-fns
@@ -75,3 +77,4 @@ updating avj npm install ajv@6 ajv-keywords@3 --legacy-peer-deps
 
 mockdata updated to check daterange picker is working or not properly
 and its working
+
