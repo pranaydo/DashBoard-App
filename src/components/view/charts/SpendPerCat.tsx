@@ -39,7 +39,7 @@ const SpendPerCat: React.FC<{ filters: Filters }> = ({ filters }) => {
         data={chartData}
         keys={["spend"]}
         indexBy="category"
-        margin={{ top: 20, right: 20, bottom: 80, left: 60 }}
+        margin={{ top: 20, right: 20, bottom: 80, left: 70 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
@@ -57,7 +57,7 @@ const SpendPerCat: React.FC<{ filters: Filters }> = ({ filters }) => {
           tickSize: 5,
           tickPadding: 5,
           legend: "Spend",
-          legendOffset: -50,
+          legendOffset: -65,
           legendPosition: "middle",
         }}
         labelSkipWidth={12}

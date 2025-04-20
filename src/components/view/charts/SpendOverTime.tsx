@@ -42,7 +42,7 @@ const SpendOverTime: React.FC<{ filters: Filters }> = ({ filters }) => {
     <Box sx={{ height: 400 }}>
       <ResponsiveLine
         data={chartData}
-        margin={{ top: 20, right: 20, bottom: 80, left: 60 }}
+        margin={{ top: 20, right: 20, bottom: 80, left: 80 }}
         xScale={{ type: "point" }}
         yScale={{ type: "linear", min: "auto", max: "auto" }}
         axisBottom={{
@@ -57,7 +57,7 @@ const SpendOverTime: React.FC<{ filters: Filters }> = ({ filters }) => {
           tickSize: 5,
           tickPadding: 5,
           legend: "Spend",
-          legendOffset: -50,
+          legendOffset: -65,
           legendPosition: "middle",
         }}
         pointSize={6}
