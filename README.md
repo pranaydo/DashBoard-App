@@ -47,6 +47,7 @@ Additionally, there are TypeScript linting errors causing the build to treat war
 
 fixed issues related build deploying again
 
+
 <!--  -->
 
 Extra column Added in table - Date
@@ -60,3 +61,5 @@ Added components for diffrent charts
 3 - Performance by Category (Stacked)
 
 <!-- DateRange picker and Attribute and metrics filter remaining  -->
+
+
