@@ -33,7 +33,8 @@ const App: React.FC = () => {
             {tab === 0 ? (
               <MetricsView filters={filters} />
             ) : (
-              <AnalyticsView filters={filters} />
+              // <AnalyticsView filters={filters} />
+              <div> analytics</div>
             )}
           </Box>
         </Box>

@@ -10,9 +10,14 @@ interface FiltersPanelProps {
 }
 
 const sectorOptions = ["Retail", "Food", "Industrial"];
-const categoryOptions = ["Juice", "Snacks"];
-const metricOptions = ["spend", "reference", "percentChange", "absoluteChange"];
-const attributeOptions = ["country", "sector", "category"];
+const categoryOptions = ["Juice", "Snacks", "Beverages", "Frozen Foods"];
+const metricOptions = [
+  "mySpend",
+  "sameStoreSpend",
+  "newStoreSpend",
+  "lostStoreSpend",
+];
+const attributeOptions = ["country", "state", "city", "sector", "category"];
 
 const FiltersPanel: React.FC<FiltersPanelProps> = ({ filters, setFilters }) => {
   const today = new Date();
@@ -106,12 +111,11 @@ const FiltersPanel: React.FC<FiltersPanelProps> = ({ filters, setFilters }) => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Attributes"
+                label="Group By"
                 size="small"
-                sx={{ width: 160 }}
+                sx={{ width: 200 }}
               />
             )}
-            disabled
           />
 
           <Autocomplete
@@ -126,10 +130,9 @@ const FiltersPanel: React.FC<FiltersPanelProps> = ({ filters, setFilters }) => {
                 {...params}
                 label="Metrics"
                 size="small"
-                sx={{ width: 160 }}
+                sx={{ width: 200 }}
               />
             )}
-            disabled
           />
         </Box>
 

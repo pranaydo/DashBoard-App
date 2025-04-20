@@ -1,203 +1,322 @@
-import React, { useState, useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Table,
+  TableBody,
+  TableCell,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Paper,
   TableSortLabel,
   TablePagination,
+  Paper,
   Box,
 } from "@mui/material";
 import { useUser } from "../../context/UserContext";
 import { Filters } from "../../type/types";
+import { applyFilters } from "../../utils/FilterData";
+import _ from "lodash";
 
 interface MetricsTableProps {
   filters: Filters;
 }
 
-type DataRow = {
-  sector: string;
-  category: string;
-  spend: number;
-  percentChange: number;
-  absoluteChange: number;
-  date: string;
-};
+type SpendMetric =
+  | "mySpend"
+  | "sameStoreSpend"
+  | "newStoreSpend"
+  | "lostStoreSpend";
+
+const allMetrics: SpendMetric[] = [
+  "mySpend",
+  "sameStoreSpend",
+  "newStoreSpend",
+  "lostStoreSpend",
+];
+
+const formatMetricName = (metric: string) =>
+  metric
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/^./, (char) => char.toUpperCase());
 
 const MetricsTable: React.FC<MetricsTableProps> = ({ filters }) => {
   const { user } = useUser();
-  const [orderBy, setOrderBy] = useState<keyof DataRow>("sector");
+  const [orderBy, setOrderBy] = useState<string>("sector");
   const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  // Filter data based on filters
-  const filteredData = useMemo(() => {
-    return user.data.filter((d) => {
-      const matchesSector = !filters.sector || d.sector === filters.sector;
-      const matchesCategory =
-        !filters.category || d.category === filters.category;
-      const matchesDate =
-        (!filters.startDate ||
-          new Date(d.date) >= new Date(filters.startDate)) &&
-        (!filters.endDate || new Date(d.date) <= new Date(filters.endDate));
-      return matchesSector && matchesCategory && matchesDate;
-    });
-  }, [user.data, filters]);
+  const selectedMetrics: SpendMetric[] =
+    Array.isArray(filters.metrics) && filters.metrics.length > 0
+      ? (filters.metrics as SpendMetric[])
+      : allMetrics;
 
-  // Sort data
-  const sortedData = useMemo(() => {
-    return [...filteredData].sort((a, b) => {
-      const aVal = a[orderBy];
-      const bVal = b[orderBy];
+  const groupBy = filters.attributes?.length ? filters.attributes : [];
 
-      if (orderBy === "date") {
-        const aDate = new Date(aVal as string).getTime();
-        const bDate = new Date(bVal as string).getTime();
-        return order === "asc" ? aDate - bDate : bDate - aDate;
-      }
-
-      if (aVal < bVal) return order === "asc" ? -1 : 1;
-      if (aVal > bVal) return order === "asc" ? 1 : -1;
-      return 0;
-    });
-  }, [filteredData, orderBy, order]);
-
-  // Paginate data
-  const paginatedData = useMemo(
-    () =>
-      sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [sortedData, page, rowsPerPage]
+  const filteredData = useMemo(
+    () => applyFilters(user.data, filters),
+    [user.data, filters]
   );
 
-  const handleSort = (property: keyof DataRow) => {
+  const groupedData = useMemo(() => {
+    if (groupBy.length === 0) {
+      return filteredData.map((d, idx) => ({
+        key: `${d.sector}-${d.category}-${idx}`,
+        values: {
+          sector: d.sector,
+          category: d.category,
+        },
+        metrics: selectedMetrics.reduce((acc, metric) => {
+          const m = d[metric];
+          acc[metric] = {
+            current: m.current,
+            reference: m.reference,
+            absoluteChange: m.absoluteChange,
+            percentChange: m.percentChange,
+          };
+          return acc;
+        }, {} as Record<SpendMetric, any>),
+      }));
+    }
+
+    const grouped = _.groupBy(filteredData, (item) =>
+      groupBy.map((key) => item[key as keyof typeof item]).join(" | ")
+    );
+
+    return Object.entries(grouped).map(([key, group]) => {
+      const first = group[0];
+      const values: Record<string, string> = {};
+      groupBy.forEach((attr) => {
+        values[attr] = first[attr as keyof typeof first] as string;
+      });
+
+      const metrics = selectedMetrics.reduce((acc, metric) => {
+        const total = group.reduce(
+          (sum, entry) => {
+            const m = entry[metric];
+            sum.current += m.current;
+            sum.reference += m.reference;
+            sum.absoluteChange += m.absoluteChange;
+            sum.percentChange += m.percentChange;
+            return sum;
+          },
+          { current: 0, reference: 0, absoluteChange: 0, percentChange: 0 }
+        );
+
+        acc[metric] = {
+          current: total.current,
+          reference: total.reference,
+          absoluteChange: total.absoluteChange,
+          percentChange: total.percentChange / group.length,
+        };
+
+        return acc;
+      }, {} as Record<SpendMetric, any>);
+
+      return {
+        key,
+        values,
+        metrics,
+      };
+    });
+  }, [filteredData, groupBy, selectedMetrics]);
+
+  const sortedData = useMemo(() => {
+    return [...groupedData].sort((a, b) => {
+      let aVal = a.values[orderBy] || "";
+      let bVal = b.values[orderBy] || "";
+
+      selectedMetrics.forEach((metric) => {
+        ["current", "reference", "absoluteChange", "percentChange"].forEach(
+          (field) => {
+            const key = `${metric}.${field}`;
+            if (orderBy === key) {
+              aVal = a.metrics[metric][field];
+              bVal = b.metrics[metric][field];
+            }
+          }
+        );
+      });
+
+      if (typeof aVal === "number" && typeof bVal === "number") {
+        return order === "asc" ? aVal - bVal : bVal - aVal;
+      } else {
+        return order === "asc"
+          ? String(aVal).localeCompare(String(bVal))
+          : String(bVal).localeCompare(String(aVal));
+      }
+    });
+  }, [groupedData, order, orderBy, selectedMetrics]);
+
+  const paginatedData = useMemo(() => {
+    return sortedData.slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    );
+  }, [sortedData, page, rowsPerPage]);
+
+  const handleSort = (property: string) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
-    setPage(0);
-  };
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
   };
 
   return (
-    <Box component={Paper} elevation={3} sx={{ overflow: "auto" }}>
-      <Table stickyHeader>
-        <TableHead>
-          <TableRow>
-            <TableCell
-              sortDirection={orderBy === "sector" ? order : false}
-              sx={{ fontWeight: "bold" }}
-            >
-              <TableSortLabel
-                active={orderBy === "sector"}
-                direction={orderBy === "sector" ? order : "asc"}
-                onClick={() => handleSort("sector")}
-              >
-                Sector
-              </TableSortLabel>
-            </TableCell>
-            <TableCell
-              sortDirection={orderBy === "category" ? order : false}
-              sx={{ fontWeight: "bold" }}
-            >
-              <TableSortLabel
-                active={orderBy === "category"}
-                direction={orderBy === "category" ? order : "asc"}
-                onClick={() => handleSort("category")}
-              >
-                Category
-              </TableSortLabel>
-            </TableCell>
-            <TableCell
-              sortDirection={orderBy === "spend" ? order : false}
-              sx={{ fontWeight: "bold" }}
-            >
-              <TableSortLabel
-                active={orderBy === "spend"}
-                direction={orderBy === "spend" ? order : "asc"}
-                onClick={() => handleSort("spend")}
-              >
-                Spend
-              </TableSortLabel>
-            </TableCell>
-            <TableCell
-              sortDirection={orderBy === "percentChange" ? order : false}
-              sx={{ fontWeight: "bold" }}
-            >
-              <TableSortLabel
-                active={orderBy === "percentChange"}
-                direction={orderBy === "percentChange" ? order : "asc"}
-                onClick={() => handleSort("percentChange")}
-              >
-                % Change
-              </TableSortLabel>
-            </TableCell>
-            <TableCell
-              sortDirection={orderBy === "absoluteChange" ? order : false}
-              sx={{ fontWeight: "bold" }}
-            >
-              <TableSortLabel
-                active={orderBy === "absoluteChange"}
-                direction={orderBy === "absoluteChange" ? order : "asc"}
-                onClick={() => handleSort("absoluteChange")}
-              >
-                Absolute Change
-              </TableSortLabel>
-            </TableCell>
-            <TableCell
-              sortDirection={orderBy === "date" ? order : false}
-              sx={{ fontWeight: "bold" }}
-            >
-              <TableSortLabel
-                active={orderBy === "date"}
-                direction={orderBy === "date" ? order : "asc"}
-                onClick={() => handleSort("date")}
-              >
-                Date
-              </TableSortLabel>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {paginatedData.map((row, i) => (
-            <TableRow key={i}>
-              <TableCell>{row.sector}</TableCell>
-              <TableCell>{row.category}</TableCell>
-              <TableCell>{row.spend}</TableCell>
-              <TableCell>{row.percentChange}%</TableCell>
-              <TableCell>{row.absoluteChange}</TableCell>
-              <TableCell>
-                {new Date(row.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </TableCell>
+    <Paper elevation={3} sx={{ maxWidth: "100%", overflow: "hidden" }}>
+      <Box sx={{ overflowX: "auto" }}>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              {(groupBy.length > 0 ? groupBy : ["sector", "category"]).map(
+                (attr) => (
+                  <TableCell
+                    key={attr}
+                    rowSpan={2}
+                    sx={{ fontWeight: "bold", fontSize: 13 }}
+                  >
+                    <TableSortLabel
+                      active={orderBy === attr}
+                      direction={orderBy === attr ? order : "asc"}
+                      onClick={() => handleSort(attr)}
+                    >
+                      {attr.charAt(0).toUpperCase() + attr.slice(1)}
+                    </TableSortLabel>
+                  </TableCell>
+                )
+              )}
+              {selectedMetrics.map((metric) => (
+                <TableCell
+                  colSpan={4}
+                  key={metric}
+                  align="center"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: 13,
+                    borderLeft: "1px solid #ddd",
+                  }}
+                >
+                  {formatMetricName(metric)}
+                </TableCell>
+              ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 15, 20]}
-        component="div"
-        count={sortedData.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Box>
+            <TableRow>
+              {selectedMetrics.flatMap((metric) => [
+                <TableCell key={`${metric}-current`} sx={{ fontSize: 13 }}>
+                  <TableSortLabel
+                    active={orderBy === `${metric}.current`}
+                    direction={orderBy === `${metric}.current` ? order : "asc"}
+                    onClick={() => handleSort(`${metric}.current`)}
+                  >
+                    Current
+                  </TableSortLabel>
+                </TableCell>,
+                <TableCell key={`${metric}-reference`} sx={{ fontSize: 13 }}>
+                  <TableSortLabel
+                    active={orderBy === `${metric}.reference`}
+                    direction={
+                      orderBy === `${metric}.reference` ? order : "asc"
+                    }
+                    onClick={() => handleSort(`${metric}.reference`)}
+                  >
+                    Reference
+                  </TableSortLabel>
+                </TableCell>,
+                <TableCell key={`${metric}-abs`} sx={{ fontSize: 13 }}>
+                  <TableSortLabel
+                    active={orderBy === `${metric}.absoluteChange`}
+                    direction={
+                      orderBy === `${metric}.absoluteChange` ? order : "asc"
+                    }
+                    onClick={() => handleSort(`${metric}.absoluteChange`)}
+                  >
+                    Abs
+                  </TableSortLabel>
+                </TableCell>,
+                <TableCell key={`${metric}-pct`} sx={{ fontSize: 13 }}>
+                  <TableSortLabel
+                    active={orderBy === `${metric}.percentChange`}
+                    direction={
+                      orderBy === `${metric}.percentChange` ? order : "asc"
+                    }
+                    onClick={() => handleSort(`${metric}.percentChange`)}
+                  >
+                    %
+                  </TableSortLabel>
+                </TableCell>,
+              ])}
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {paginatedData.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={100}
+                  align="center"
+                  sx={{ py: 4, fontStyle: "italic", color: "gray" }}
+                >
+                  No data found for selected filters.
+                </TableCell>
+              </TableRow>
+            ) : (
+              paginatedData.map((row) => (
+                <TableRow key={row.key}>
+                  {(groupBy.length > 0 ? groupBy : ["sector", "category"]).map(
+                    (attr) => (
+                      <TableCell key={attr} sx={{ fontSize: 13 }}>
+                        {row.values[attr]}
+                      </TableCell>
+                    )
+                  )}
+                  {selectedMetrics.flatMap((metric) => {
+                    const m = row.metrics[metric];
+                    return [
+                      <TableCell
+                        key={`${row.key}-${metric}-current`}
+                        sx={{ fontSize: 13 }}
+                      >
+                        {m.current}
+                      </TableCell>,
+                      <TableCell
+                        key={`${row.key}-${metric}-reference`}
+                        sx={{ fontSize: 13 }}
+                      >
+                        {m.reference}
+                      </TableCell>,
+                      <TableCell
+                        key={`${row.key}-${metric}-abs`}
+                        sx={{ fontSize: 13 }}
+                      >
+                        {m.absoluteChange}
+                      </TableCell>,
+                      <TableCell
+                        key={`${row.key}-${metric}-pct`}
+                        sx={{ fontSize: 13 }}
+                      >
+                        {m.percentChange?.toFixed(2)}%
+                      </TableCell>,
+                    ];
+                  })}
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </Box>
+
+      <Box sx={{ borderTop: "1px solid #eee", p: 1 }}>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 15]}
+          component="div"
+          count={sortedData.length}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          onPageChange={(_, newPage) => setPage(newPage)}
+          onRowsPerPageChange={(e) => {
+            setRowsPerPage(parseInt(e.target.value, 10));
+            setPage(0);
+          }}
+        />
+      </Box>
+    </Paper>
   );
 };
 

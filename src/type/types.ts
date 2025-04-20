@@ -1,24 +1,36 @@
-export interface UserData {
+export interface SpendMetric {
+  current: number;
+  reference: number;
+  absoluteChange: number;
+  percentChange: number;
+}
+
+export interface DataEntry {
+  country: string;
+  state: string;
+  city: string;
   sector: string;
   category: string;
-  spend: number;
-  percentChange: number;
-  absoluteChange: number;
-  date: string; 
+  startDate: string;
+  endDate: string;
+
+  mySpend: SpendMetric;
+  sameStoreSpend: SpendMetric;
+  newStoreSpend: SpendMetric;
+  lostStoreSpend: SpendMetric;
 }
 
 export interface User {
   id: number;
   name: string;
-  data: UserData[];
+  data: DataEntry[];
 }
 
 export interface Filters {
-  sector?: string;
-  category?: string;
   startDate?: string;
   endDate?: string;
-  attributes?: string[];  
-  metrics?: string[];     
+  sector?: string;
+  category?: string;
+  attributes?: string[]; // e.g., ["country", "sector"]
+  metrics?: string[];    // e.g., ["mySpend", "newStoreSpend"]
 }
-
