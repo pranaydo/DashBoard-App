@@ -10,7 +10,7 @@ interface FiltersPanelProps {
 }
 
 const sectorOptions = ["Retail", "Food", "Industrial"];
-const categoryOptions = ["Juice", "Snacks", "Beverages", "Frozen Foods"];
+const categoryOptions = ["Juice", "Snacks"];
 const metricOptions = [
   "mySpend",
   "sameStoreSpend",

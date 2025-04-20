@@ -14,31 +14,28 @@ const App: React.FC = () => {
   console.log(tab);
   return (
     <UserProvider>
-      <div className="App">
-        <Box sx={{ px: 10, py: 10, m: 0 }}>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Tabs value={tab} onChange={(e, newVal) => setTab(newVal)}>
-              <Tab label="Metrics View" />
-              <Tab label="Analytics View" />
-            </Tabs>
-            <div>
-              <TopBar />
-            </div>
-          </div>
+      <Box sx={{ px: 10, py: 10, m: 0 }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Tabs value={tab} onChange={(e, newVal) => setTab(newVal)}>
+            <Tab label="Metrics View" />
+            <Tab label="Analytics View" />
+          </Tabs>
           <div>
-            <FiltersPanel filters={filters} setFilters={setFilters} />
+            <TopBar />
           </div>
+        </div>
+        <div>
+          <FiltersPanel filters={filters} setFilters={setFilters} />
+        </div>
 
-          <Box mt={2}>
-            {tab === 0 ? (
-              <MetricsView filters={filters} />
-            ) : (
-              // <AnalyticsView filters={filters} />
-              <div> analytics</div>
-            )}
-          </Box>
+        <Box mt={2}>
+          {tab === 0 ? (
+            <MetricsView filters={filters} />
+          ) : (
+            <AnalyticsView filters={filters} />
+          )}
         </Box>
-      </div>
+      </Box>
     </UserProvider>
   );
 };
