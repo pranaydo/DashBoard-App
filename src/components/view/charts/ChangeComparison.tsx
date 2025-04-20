@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Filters } from "../../../type/types";
 import { useUser } from "../../../context/UserContext";
 import { ResponsiveBar } from "@nivo/bar";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 interface ChangeComparisonProps {
   filters: Filters;
