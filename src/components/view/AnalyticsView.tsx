@@ -1,84 +1,89 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Filters } from "../../type/types";
-import { useUser } from "../../context/UserContext";
-import { ResponsiveLine } from "@nivo/line";
+import { Box, Paper, Typography, useTheme } from "@mui/material";
+import SpendOverTime from "./charts/SpendOverTime";
+import SendPerCat from "./charts/SpendPerCat";
+import ChangeComparison from "./charts/ChangeComparison";
+import StackedBarChart from "./charts/StackedBarChart";
 
 interface AnalyticsViewProps {
   filters: Filters;
 }
 
 const AnalyticsView: React.FC<AnalyticsViewProps> = ({ filters }) => {
-  const { user } = useUser();
-
-  const filteredData = useMemo(() => {
-    return user.data.filter((d) => {
-      const matchesSector = !filters.sector || d.sector === filters.sector;
-      const matchesCategory =
-        !filters.category || d.category === filters.category;
-      const matchesDate =
-        (!filters.startDate ||
-          new Date(d.date) >= new Date(filters.startDate)) &&
-        (!filters.endDate || new Date(d.date) <= new Date(filters.endDate));
-      return matchesSector && matchesCategory && matchesDate;
-    });
-  }, [user.data, filters]);
-
-  const spendOverTime = useMemo(() => {
-    const groupedByDate = filteredData.reduce(
-      (acc: Record<string, number>, curr) => {
-        acc[curr.date] = (acc[curr.date] || 0) + curr.spend;
-        return acc;
-      },
-      {}
-    );
-
-    return [
-      {
-        id: "Spend",
-        data: Object.entries(groupedByDate).map(([date, value]) => ({
-          x: date,
-          y: value,
-        })),
-      },
-    ];
-  }, [filteredData]);
+  const theme = useTheme();
 
   return (
-    <div style={{ height: 500 }}>
-      <h3>Spend Over Time</h3>
-      <ResponsiveLine
-        data={spendOverTime}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: "point" }}
-        yScale={{
-          type: "linear",
-          min: "auto",
-          max: "auto",
-          stacked: false,
-          reverse: false,
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
+        gap: 3,
+        p: 2,
+      }}
+    >
+      <Paper
+        elevation={3}
+        sx={{
+          p: 2,
+          height: "400px",
+          [theme.breakpoints.up("md")]: {
+            height: "450px",
+          },
         }}
-        axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          legend: "Date",
-          legendOffset: 36,
-          legendPosition: "middle",
+      >
+        <Typography variant="h6" gutterBottom>
+          Spend Over Time
+        </Typography>
+        <SpendOverTime filters={filters} />
+      </Paper>
+      <Paper
+        elevation={3}
+        sx={{
+          p: 2,
+          height: "400px",
+          [theme.breakpoints.up("md")]: {
+            height: "450px",
+          },
         }}
-        axisLeft={{
-          tickSize: 5,
-          tickPadding: 5,
-          legend: "Spend",
-          legendOffset: -40,
-          legendPosition: "middle",
+      >
+        <Typography variant="h6" gutterBottom>
+          Spend per Category{" "}
+        </Typography>
+
+        <SendPerCat filters={filters} />
+      </Paper>
+      <Paper
+        elevation={3}
+        sx={{
+          p: 2,
+          height: "400px",
+          [theme.breakpoints.up("md")]: {
+            height: "450px",
+          },
         }}
-        pointSize={8}
-        pointColor={{ theme: "background" }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: "serieColor" }}
-        useMesh={true}
-        colors={{ scheme: "category10" }}
-      />
-    </div>
+      >
+        <Typography variant="h6" gutterBottom>
+          % Change vs Absolute Change Comparison
+        </Typography>
+        <ChangeComparison filters={filters} />
+      </Paper>
+      <Paper
+        elevation={3}
+        sx={{
+          p: 2,
+          height: "400px",
+          [theme.breakpoints.up("md")]: {
+            height: "450px",
+          },
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          Performance by Category (Stacked)
+        </Typography>
+        <StackedBarChart filters={filters} />
+      </Paper>
+    </Box>
   );
 };
 
