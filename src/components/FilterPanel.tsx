@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, TextField, MenuItem, Autocomplete } from "@mui/material";
+import { Box, TextField, MenuItem, Autocomplete, Button } from "@mui/material";
 // import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 // import AdapterDateFns from '@date-io/date-fns';
 import { Filters } from "../type/types";
@@ -95,6 +95,9 @@ const FiltersPanel: React.FC<FiltersPanelProps> = ({ filters, setFilters }) => {
           <TextField {...params} label="Metrics" sx={{ minWidth: 200 }} />
         )}
       />
+      <Button onClick={() => setFilters({})} variant="outlined">
+        Reset
+      </Button>
     </Box>
     // </LocalizationProvider>
   );

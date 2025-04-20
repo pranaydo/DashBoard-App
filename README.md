@@ -37,3 +37,26 @@ so downgrading react to 18
 and installing nivo
 
 Added one chart : Spend Over Time using ResponsiveLine of nivo charts
+
+Deplyoing first version of porject on netlify
+Build is failing due to some warnings and getting error :
+The build failed with the following error:
+
+"build.command" failed. Error message: Command failed with exit code 1: npm run build at line 107.
+Additionally, there are TypeScript linting errors causing the build to treat warnings as errors due to the environment variable process.env.CI = true.
+
+fixed issues related build deploying again
+
+<!--  -->
+
+Extra column Added in table - Date
+and Reset Button is also added to reset all the filter values to get all data of user
+
+<!--  -->
+
+Added components for diffrent charts
+1 - spend per category
+2 - % Change vs Absolute Change Comparison
+3 - Performance by Category (Stacked)
+
+<!-- DateRange picker and Attribute and metrics filter remaining  -->
