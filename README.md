@@ -96,3 +96,4 @@ keep the standard width of 200px for each USer Button
 reduced width of modal also
 
 showing user name on the topbar efore butoon of select user
+highligiting the user and showing avatar
