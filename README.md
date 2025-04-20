@@ -63,3 +63,18 @@ Added components for diffrent charts
 <!-- DateRange picker and Attribute and metrics filter remaining  -->
 
 
+for datepickers installing @mui/x-date-pickers
+npm install @mui/x-date-pickers @date-io/date-fns date-fns
+date pickers are not working due to versions
+Deleting nodemodules ana package.json.lock
+installing packages wtht --legacy-peer-deps by doing npm install @mui/material@5.14.20 @emotion/react @emotion/styled @mui/icons-material @mui/x-date-pickers@5.0.17 @date-io/date-fns date-fns --legacy-peer-deps
+and npm install date-fns@2.30.0 --legacy-peer-deps
+again another issue came : Cannot find module 'ajv/dist/compile/codegen'
+by doing some check on gpt and webpack got to know
+A package (ajv-keywords, used by webpack-dev-server) is expecting a different version of ajv than what's installed.
+might be missing ajv completely due to recent dependency cleanup.
+updating avj npm install ajv@6 ajv-keywords@3 --legacy-peer-deps
+
+mockdata updated to check daterange picker is working or not properly
+and its working
+
