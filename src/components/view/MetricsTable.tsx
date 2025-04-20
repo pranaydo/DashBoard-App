@@ -49,7 +49,10 @@ const MetricsTable: React.FC<MetricsTableProps> = ({ filters }) => {
       ? (filters.metrics as SpendMetric[])
       : allMetrics;
 
-  const groupBy = filters.attributes?.length ? filters.attributes : [];
+  // const groupBy = filters.attributes?.length ? filters.attributes : [];
+  const groupBy = useMemo(() => {
+    return filters.attributes?.length ? filters.attributes : [];
+  }, [filters.attributes]);
 
   const filteredData = useMemo(
     () => applyFilters(user.data, filters),
