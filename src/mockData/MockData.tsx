@@ -142,7 +142,7 @@ export const users: User[] = [
         state: "California",
         city: "San Francisco",
         sector: "Industrial",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-02-20",
         endDate: "2025-03-02",
         mySpend: {
@@ -175,7 +175,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Industrial",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-03-09",
         endDate: "2025-03-18",
         mySpend: {
@@ -274,7 +274,7 @@ export const users: User[] = [
         state: "Karnataka",
         city: "Bengaluru",
         sector: "Industrial",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-02-19",
         endDate: "2025-02-25",
         mySpend: {
@@ -346,7 +346,7 @@ export const users: User[] = [
         state: "Karnataka",
         city: "Bengaluru",
         sector: "Food",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-01-06",
         endDate: "2025-01-09",
         mySpend: {
@@ -379,7 +379,7 @@ export const users: User[] = [
         state: "Maharashtra",
         city: "Mumbai",
         sector: "Food",
-        category: "Beverages",
+        category: "Snacks",
         startDate: "2025-03-05",
         endDate: "2025-03-07",
         mySpend: {
@@ -412,7 +412,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Retail",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-01-17",
         endDate: "2025-01-25",
         mySpend: {
@@ -445,7 +445,7 @@ export const users: User[] = [
         state: "Karnataka",
         city: "Bengaluru",
         sector: "Retail",
-        category: "Beverages",
+        category: "Snacks",
         startDate: "2025-03-24",
         endDate: "2025-04-02",
         mySpend: {
@@ -478,7 +478,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Food",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-03-29",
         endDate: "2025-03-31",
         mySpend: {
@@ -544,7 +544,7 @@ export const users: User[] = [
         state: "California",
         city: "San Francisco",
         sector: "Retail",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-01-20",
         endDate: "2025-01-25",
         mySpend: {
@@ -577,7 +577,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Industrial",
-        category: "Frozen Foods",
+        category: "Juice",
         startDate: "2025-02-19",
         endDate: "2025-02-25",
         mySpend: {
@@ -643,7 +643,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Food",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-03-05",
         endDate: "2025-03-06",
         mySpend: {
@@ -682,7 +682,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Industrial",
-        category: "Frozen Foods",
+        category: "Juice",
         startDate: "2025-01-16",
         endDate: "2025-01-24",
         mySpend: {
@@ -715,7 +715,7 @@ export const users: User[] = [
         state: "California",
         city: "San Francisco",
         sector: "Industrial",
-        category: "Frozen Foods",
+        category: "Snacks",
         startDate: "2025-01-30",
         endDate: "2025-02-04",
         mySpend: {
@@ -814,7 +814,7 @@ export const users: User[] = [
         state: "California",
         city: "San Francisco",
         sector: "Industrial",
-        category: "Beverages",
+        category: "Snacks",
         startDate: "2025-03-29",
         endDate: "2025-04-07",
         mySpend: {
@@ -847,7 +847,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Food",
-        category: "Beverages",
+        category: "Snacks",
         startDate: "2025-02-09",
         endDate: "2025-02-11",
         mySpend: {
@@ -913,7 +913,7 @@ export const users: User[] = [
         state: "Karnataka",
         city: "Bengaluru",
         sector: "Retail",
-        category: "Frozen Foods",
+        category: "Juice",
         startDate: "2025-02-19",
         endDate: "2025-02-20",
         mySpend: {
@@ -979,7 +979,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Retail",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-01-26",
         endDate: "2025-02-03",
         mySpend: {
@@ -1117,7 +1117,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Food",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-02-27",
         endDate: "2025-03-06",
         mySpend: {
@@ -1150,7 +1150,7 @@ export const users: User[] = [
         state: "Maharashtra",
         city: "Mumbai",
         sector: "Retail",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-03-21",
         endDate: "2025-03-29",
         mySpend: {
@@ -1183,7 +1183,7 @@ export const users: User[] = [
         state: "California",
         city: "San Francisco",
         sector: "Industrial",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-01-15",
         endDate: "2025-01-20",
         mySpend: {
@@ -1216,7 +1216,7 @@ export const users: User[] = [
         state: "Karnataka",
         city: "Bengaluru",
         sector: "Industrial",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-03-11",
         endDate: "2025-03-18",
         mySpend: {
@@ -1354,7 +1354,7 @@ export const users: User[] = [
         state: "Maharashtra",
         city: "Mumbai",
         sector: "Food",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-01-15",
         endDate: "2025-01-19",
         mySpend: {
@@ -1387,7 +1387,7 @@ export const users: User[] = [
         state: "Karnataka",
         city: "Bengaluru",
         sector: "Retail",
-        category: "Frozen Foods",
+        category: "Snacks",
         startDate: "2025-01-05",
         endDate: "2025-01-06",
         mySpend: {
@@ -1420,7 +1420,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Industrial",
-        category: "Frozen Foods",
+        category: "Juice",
         startDate: "2025-03-18",
         endDate: "2025-03-27",
         mySpend: {
@@ -1453,7 +1453,7 @@ export const users: User[] = [
         state: "Texas",
         city: "Austin",
         sector: "Retail",
-        category: "Beverages",
+        category: "Juice",
         startDate: "2025-03-12",
         endDate: "2025-03-15",
         mySpend: {
@@ -1519,7 +1519,7 @@ export const users: User[] = [
         state: "California",
         city: "San Francisco",
         sector: "Food",
-        category: "Frozen Foods",
+        category: "Juice",
         startDate: "2025-04-01",
         endDate: "2025-04-11",
         mySpend: {
@@ -1552,7 +1552,7 @@ export const users: User[] = [
         state: "California",
         city: "San Francisco",
         sector: "Industrial",
-        category: "Frozen Foods",
+        category: "Snacks",
         startDate: "2025-03-08",
         endDate: "2025-03-14",
         mySpend: {

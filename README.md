@@ -97,3 +97,27 @@ reduced width of modal also
 
 showing user name on the topbar efore butoon of select user
 highligiting the user and showing avatar
+
+<!-- ------------------------------------------------------- -->
+
+            AFTER GETTING CLARITY ABOUT ALL FILTER
+
+<!-- ------------------------------------------------------- -->
+
+Datastructure of mock data is updated as per sample datastructure given
+focusing on Metric View Firs :
+commented Analytics View for now
+Enabled filters Category and Metrics
+
+     updated the metrics table  as per requirement
+     changed formate of table
+     And EXTRACTED LOGIC OF FILTERING in separate component
+
+     Types also changed and created new types for metrics and category  and the for the component of filtering data
+
+<!--
+     Still one issue is there when we select multiple filters the UI is pushing down -->
+
+    Added Analytics view
+    updated the spend per category  graph
+    updaed all the charts
