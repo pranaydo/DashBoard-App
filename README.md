@@ -53,3 +53,10 @@ Extra column Added in table - Date
 and Reset Button is also added to reset all the filter values to get all data of user
 
 <!--  -->
+
+Added components for diffrent charts
+1 - spend per category
+2 - % Change vs Absolute Change Comparison
+3 - Performance by Category (Stacked)
+
+<!-- DateRange picker and Attribute and metrics filter remaining  -->
