@@ -84,6 +84,7 @@ const FiltersPanel: React.FC<FiltersPanelProps> = ({ filters, setFilters }) => {
         renderInput={(params) => (
           <TextField {...params} label="Attributes" sx={{ minWidth: 200 }} />
         )}
+        disabled
       />
 
       <Autocomplete
@@ -94,6 +95,7 @@ const FiltersPanel: React.FC<FiltersPanelProps> = ({ filters, setFilters }) => {
         renderInput={(params) => (
           <TextField {...params} label="Metrics" sx={{ minWidth: 200 }} />
         )}
+        disabled
       />
       <Button onClick={() => setFilters({})} variant="outlined">
         Reset

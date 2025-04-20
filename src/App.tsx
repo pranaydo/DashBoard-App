@@ -25,7 +25,7 @@ const App: React.FC = () => {
               <TopBar />
             </div>
           </div>
-          <div style={{ border: "1px solid red", marginTop: "2px" }}>
+          <div>
             <FiltersPanel filters={filters} setFilters={setFilters} />
           </div>
 
