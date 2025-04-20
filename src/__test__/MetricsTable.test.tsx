@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import MetricsTable from '../components/view/MetricsTable';
-import { Filters } from '../type/types';
-import { UserProvider } from '../context/UserContext';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import MetricsTable from "../components/view/MetricsTable";
+import { Filters } from "../type/types";
+import { UserProvider } from "../context/UserContext";
 
 const renderWithContext = (filters: Filters) => {
   render(
@@ -12,10 +12,10 @@ const renderWithContext = (filters: Filters) => {
   );
 };
 
-describe('MetricsTable - Basic Behavior', () => {
+describe("MetricsTable - Basic Behavior", () => {
   it('renders "No data found" when no data matches', () => {
     const filters: Filters = {
-      sector: 'NonexistentSector',
+      sector: "NonexistentSector",
     };
 
     renderWithContext(filters);
@@ -23,9 +23,9 @@ describe('MetricsTable - Basic Behavior', () => {
     expect(screen.getByText(/no data found/i)).toBeInTheDocument();
   });
 
-  it('renders correct metric headers based on selected metrics', () => {
+  it("renders correct metric headers based on selected metrics", () => {
     const filters: Filters = {
-      metrics: ['mySpend'],
+      metrics: ["mySpend"],
     };
 
     renderWithContext(filters);
@@ -35,13 +35,12 @@ describe('MetricsTable - Basic Behavior', () => {
     expect(screen.getByText(/Reference/i)).toBeInTheDocument();
     expect(screen.getByText(/Abs/i)).toBeInTheDocument();
 
-    // Fix: Avoid multiple matches by selecting the first "%"
-    expect(screen.getAllByText('%')[0]).toBeInTheDocument();
+    expect(screen.getAllByText("%")[0]).toBeInTheDocument();
   });
 
-  it('toggles sort order when metric header is clicked', () => {
+  it("toggles sort order when metric header is clicked", () => {
     const filters: Filters = {
-      metrics: ['mySpend'],
+      metrics: ["mySpend"],
     };
 
     renderWithContext(filters);
@@ -52,7 +51,6 @@ describe('MetricsTable - Basic Behavior', () => {
     fireEvent.click(currentHeader);
     fireEvent.click(currentHeader);
 
-    // This ensures the column is interactive, not verifying data order
     expect(currentHeader).toBeInTheDocument();
   });
 });
