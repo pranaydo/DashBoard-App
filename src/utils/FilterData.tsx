@@ -8,6 +8,12 @@ export function applyFilters<
     endDate: string;
   }
 >(data: T[], filters: Filters): T[] {
+  // return if no filters are applied for imprving  performance
+  const hasActiveFilters =
+    filters.sector || filters.category || filters.startDate || filters.endDate;
+
+  if (!hasActiveFilters) return data;
+
   return data.filter((d) => {
     const matchesSector = !filters.sector || d.sector === filters.sector;
     const matchesCategory =
