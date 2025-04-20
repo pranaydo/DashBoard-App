@@ -4,6 +4,7 @@ import { useUser } from "../../../context/UserContext";
 import { ResponsiveBar } from "@nivo/bar";
 import { Box } from "@mui/material";
 import { applyFilters } from "../../../utils/FilterData";
+import ChartFallback from "../../../utils/ChartFallback";
 
 const ChangeComparison: React.FC<{ filters: Filters }> = ({ filters }) => {
   const { user } = useUser();
@@ -37,6 +38,10 @@ const ChangeComparison: React.FC<{ filters: Filters }> = ({ filters }) => {
       "% Change": pct.reduce((a, b) => a + b, 0) / pct.length,
     }));
   }, [filteredData, selectedMetric]);
+
+  if (filteredData.length === 0) {
+    return <ChartFallback />;
+  }
 
   return (
     <Box sx={{ height: 400 }}>

@@ -4,6 +4,7 @@ import { useUser } from "../../../context/UserContext";
 import { ResponsiveBar } from "@nivo/bar";
 import { Box } from "@mui/material";
 import { applyFilters } from "../../../utils/FilterData";
+import ChartFallback from "../../../utils/ChartFallback";
 const SpendPerCat: React.FC<{ filters: Filters }> = ({ filters }) => {
   const { user } = useUser();
   const selectedMetric = filters.metrics?.[0] ?? "mySpend";
@@ -32,6 +33,10 @@ const SpendPerCat: React.FC<{ filters: Filters }> = ({ filters }) => {
       spend,
     }));
   }, [filteredData, selectedMetric]);
+
+  if (filteredData.length === 0) {
+    return <ChartFallback />;
+  }
 
   return (
     <Box sx={{ height: 400 }}>

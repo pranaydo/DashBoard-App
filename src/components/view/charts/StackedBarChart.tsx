@@ -4,6 +4,7 @@ import { useUser } from "../../../context/UserContext";
 import { ResponsiveBar } from "@nivo/bar";
 import { Box } from "@mui/material";
 import { applyFilters } from "../../../utils/FilterData";
+import ChartFallback from "../../../utils/ChartFallback";
 
 const StackedBarChart: React.FC<{ filters: Filters }> = ({ filters }) => {
   const { user } = useUser();
@@ -48,6 +49,10 @@ const StackedBarChart: React.FC<{ filters: Filters }> = ({ filters }) => {
       "Abs Change": values["Abs Change"] / values.count,
     }));
   }, [filteredData, selectedMetric]);
+
+  if (filteredData.length === 0) {
+    return <ChartFallback />;
+  }
 
   return (
     <Box sx={{ height: 400 }}>

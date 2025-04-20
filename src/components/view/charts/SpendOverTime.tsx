@@ -4,6 +4,7 @@ import { useUser } from "../../../context/UserContext";
 import { ResponsiveLine } from "@nivo/line";
 import { Box } from "@mui/material";
 import { applyFilters } from "../../../utils/FilterData";
+import ChartFallback from "../../../utils/ChartFallback";
 
 const SpendOverTime: React.FC<{ filters: Filters }> = ({ filters }) => {
   const { user } = useUser();
@@ -37,6 +38,9 @@ const SpendOverTime: React.FC<{ filters: Filters }> = ({ filters }) => {
       },
     ];
   }, [filteredData, selectedMetric]);
+  if (filteredData.length === 0) {
+    return <ChartFallback />;
+  }
 
   return (
     <Box sx={{ height: 400 }}>

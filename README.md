@@ -250,7 +250,8 @@ npx create-react-app dashboard-app --template typescript
   2. Spend Per Category (Bar Chart)
   3. % Change vs Absolute Change Comparison (Grouped Bar)
   4. Performance by Category (Stacked Bar)
-- Charts update based on filter selections.
+  5. Charts update based on filter selections.
+  6. Displaying a message when no data is found.
 
 ---
 
