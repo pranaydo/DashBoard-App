@@ -2197,7 +2197,7 @@ export const users: User[] = [
         spend: 154,
         percentChange: 7,
         absoluteChange: 34.97,
-        date: "2025-04-03",
+        date: "2025-04-04",
       },
       {
         sector: "Food",
